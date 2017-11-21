@@ -14,31 +14,32 @@
  * Row version info
  */
 typedef struct RowStamp {
-	TransactionId	xmin;
+    TransactionId xmin;
 #ifdef ROWSTAMP_PRE83
-	CommandId		cmin;
+    CommandId cmin;
 #else
-	ItemPointerData		tid;
+    ItemPointerData tid;
 #endif
 } RowStamp;
 
-static void rowstamp_set(RowStamp *stamp, HeapTuple tup) {
-	stamp->xmin = HeapTupleHeaderGetXmin(tup->t_data);
+static void rowstamp_set(RowStamp *stamp, HeapTuple tup)
+{
+    stamp->xmin = HeapTupleHeaderGetXmin(tup->t_data);
 #ifdef ROWSTAMP_PRE83
-	stamp->cmin = HeapTupleHeaderGetCmin(tup->t_data);
+    stamp->cmin = HeapTupleHeaderGetCmin(tup->t_data);
 #else
-	stamp->tid = tup->t_self;
+    stamp->tid = tup->t_self;
 #endif
 }
 
-static bool rowstamp_check(RowStamp *stamp, HeapTuple tup) {
-	return stamp->xmin == HeapTupleHeaderGetXmin(tup->t_data)
+static bool rowstamp_check(RowStamp *stamp, HeapTuple tup)
+{
+    return stamp->xmin == HeapTupleHeaderGetXmin(tup->t_data)
 #ifdef ROWSTAMP_PRE83
-		&& stamp->cmin == HeapTupleHeaderGetCmin(tup->t_data);
+           && stamp->cmin == HeapTupleHeaderGetCmin(tup->t_data);
 #else
-		&& ItemPointerEquals(&stamp->tid, &tup->t_self);
+           && ItemPointerEquals(&stamp->tid, &tup->t_self);
 #endif
 }
 
 #endif
-

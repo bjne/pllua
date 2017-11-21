@@ -13,8 +13,7 @@
 
 #include <postgres.h>
 
-int get_pgfunc(lua_State * L);
-void register_funcinfo_mt(lua_State * L);
-
+int get_pgfunc(lua_State *L);
+void register_funcinfo_mt(lua_State *L);
 
 #endif // PLLUA_PGFUNC_H

@@ -9,7 +9,7 @@
 
 #include "plluacommon.h"
 
-typedef void (*RSDtorCallback) (void *data);
+typedef void (*RSDtorCallback)(void *data);
 
 MemoryContext get_common_ctx(void);
 void pllua_init_common_ctx(void);
@@ -17,7 +17,6 @@ void pllua_delete_common_ctx(void);
 void pllua_xact_cb(XactEvent event, void *arg);
 
 void *register_resource(void *d, RSDtorCallback dtor);
-void *unregister_resource(void* d);
-
+void *unregister_resource(void *d);
 
 #endif // PLLUA_XACT_CLEANUP_H

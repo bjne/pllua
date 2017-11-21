@@ -7,12 +7,9 @@
 
 #include <postgres.h>
 
+void register_int64(lua_State *L);
 
-void register_int64(lua_State * L);
-
-int64 get64lua(lua_State * L,int index);
-void setInt64lua(lua_State * L,int64 value);
-
-
+int64 get64lua(lua_State *L, int index);
+void setInt64lua(lua_State *L, int64 value);
 
 #endif // LUA_INT64_H

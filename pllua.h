@@ -9,44 +9,49 @@
 
 #include "plluacommon.h"
 
-/*used as a key for saving lua context lua_pushlightuserdata(p_lua_mem_cxt)
-  instead of lua_pushlightuserdata((void*)L) (in SRF the L is a lua_newthread)  */
+/* used as a key for saving lua context lua_pushlightuserdata(p_lua_mem_cxt)
+ * instead of lua_pushlightuserdata((void*)L) (in SRF the L is a lua_newthread)
+ * */
 int p_lua_mem_cxt(void);
 int p_lua_master_state(void);
 
 typedef struct luaP_Buffer {
-  int size;
-  Datum *value;
-  char *null;
+    int size;
+    Datum *value;
+    char *null;
 } luaP_Buffer;
 
 /* utils */
-void *luaP_toudata (lua_State *L, int ud, const char *tname);
-luaP_Buffer *luaP_getbuffer (lua_State *L, int n);
-/* call handler API */
-lua_State *luaP_newstate (int trusted);
-void luaP_close (lua_State *L);
-Datum luaP_validator (lua_State *L, Oid oid);
-Datum luaP_callhandler (lua_State *L, FunctionCallInfo fcinfo);
-#if PG_VERSION_NUM >= 90000
-Datum luaP_inlinehandler (lua_State *L, const char *source);
-#endif
-/* general API */
-void luaP_pushdatum (lua_State *L, Datum dat, Oid type);
-Datum luaP_todatum (lua_State *L, Oid type, int len, bool *isnull, int idx);
+void *luaP_toudata(lua_State *L, int ud, const char *tname);
+luaP_Buffer *luaP_getbuffer(lua_State *L, int n);
 
-void luaP_pushtuple_trg (lua_State *L, TupleDesc desc, HeapTuple tuple,
-    Oid relid, int readonly);
-HeapTuple luaP_totuple (lua_State *L);
-HeapTuple luaP_casttuple (lua_State *L, TupleDesc tupdesc);
+/* call handler API */
+lua_State *luaP_newstate(int trusted);
+void luaP_close(lua_State *L);
+Datum luaP_validator(lua_State *L, Oid oid);
+Datum luaP_callhandler(lua_State *L, FunctionCallInfo fcinfo);
+#if PG_VERSION_NUM >= 90000
+Datum luaP_inlinehandler(lua_State *L, const char *source);
+#endif
+
+/* general API */
+void luaP_pushdatum(lua_State *L, Datum dat, Oid type);
+Datum luaP_todatum(lua_State *L, Oid type, int len, bool *isnull, int idx);
+
+void luaP_pushtuple_trg(lua_State *L, TupleDesc desc, HeapTuple tuple,
+                        Oid relid, int readonly);
+HeapTuple luaP_totuple(lua_State *L);
+HeapTuple luaP_casttuple(lua_State *L, TupleDesc tupdesc);
+
 /* SPI */
 void luaP_pushdesctable(lua_State *L, TupleDesc desc);
 void luaP_registerspi(lua_State *L);
-void luaP_pushcursor (lua_State *L, Portal cursor);
+void luaP_pushcursor(lua_State *L, Portal cursor);
 void luaP_pushrecord(lua_State *L, Datum record);
-Portal luaP_tocursor (lua_State *L, int pos);
+Portal luaP_tocursor(lua_State *L, int pos);
 
-/* =========================================================================
+/*
+========================================================================
 
 Copyright (c) 2008 Luis Carvalho
 
@@ -70,5 +75,6 @@ ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-========================================================================= */
+========================================================================
+*/
 

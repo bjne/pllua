@@ -8,8 +8,8 @@
 #define RTUPDESCSTK_H
 
 #include "plluacommon.h"
-
 #include <stdlib.h>
+
 struct stackType;
 
 typedef struct RTDnode {
@@ -32,12 +32,10 @@ RTupDescStack rtds_get_current(void);
 
 int rtds_get_length(RTupDescStack S);
 
-
 RTupDescStack rtds_initStack(lua_State *L);
 RTupDescStack rtds_initStack_weak(lua_State *L, RTupDescStack *wp);
 
 int rtds_isempty(RTupDescStack S);
-
 
 void *rtds_pop(RTupDescStack S);
 
@@ -51,8 +49,5 @@ void rtds_notinuse(RTupDescStack S);
 
 RTupDescStack rtds_unref(RTupDescStack S);
 RTupDescStack rtds_free_if_not_used(RTupDescStack S);
-
-
-
 
 #endif // RTUPDESCSTK_H
